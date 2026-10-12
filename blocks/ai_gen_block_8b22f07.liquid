@@ -1,0 +1,152 @@
+{% doc %}
+  @prompt
+    Un bouton avec voir tous les accessoires, texte sans le gras et tout en majuscule
+{% enddoc %}
+{% assign ai_gen_id = block.id | replace: '_', '' | downcase %}
+
+{% style %}
+  .ai-accessories-link-{{ ai_gen_id }} {
+    display: block;
+    width: 100%;
+  }
+
+  .ai-accessories-link-{{ ai_gen_id }}__inner {
+    display: flex;
+    width: {{ block.settings.desktop_width_percent }}%;
+    max-width: 100%;
+    justify-content: {{ block.settings.alignment }};
+  }
+
+  .ai-accessories-link-{{ ai_gen_id }}__button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 48px;
+    padding: 12px 28px;
+    border: 1px solid {{ block.settings.button_color }};
+    border-radius: {{ block.settings.corner_radius }}px;
+    background: {{ block.settings.button_color }};
+    color: {{ block.settings.text_color }};
+    font: inherit;
+    font-size: {{ block.settings.font_size }}px;
+    font-weight: 400;
+    line-height: 1.2;
+    text-align: center;
+    text-decoration: none;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: background-color 150ms ease, color 150ms ease;
+  }
+
+  .ai-accessories-link-{{ ai_gen_id }}__button:hover {
+    background: {{ block.settings.hover_color }};
+    border-color: {{ block.settings.hover_color }};
+    color: {{ block.settings.hover_text_color }};
+  }
+
+  .ai-accessories-link-{{ ai_gen_id }}__button:focus-visible {
+    outline: 3px solid currentColor;
+    outline-offset: 3px;
+  }
+{% endstyle %}
+
+<div class="ai-accessories-link-{{ ai_gen_id }}" {{ block.shopify_attributes }}>
+  <div class="ai-accessories-link-{{ ai_gen_id }}__inner">
+    {% if block.settings.button_link != blank %}
+      <a class="ai-accessories-link-{{ ai_gen_id }}__button" href="{{ block.settings.button_link }}">{{ block.settings.button_label | escape }}</a>
+    {% else %}
+      <span class="ai-accessories-link-{{ ai_gen_id }}__button">{{ block.settings.button_label | escape }}</span>
+    {% endif %}
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Bouton accessoires",
+  "settings": [
+    {
+      "type": "text",
+      "id": "button_label",
+      "label": "Texte du bouton",
+      "default": "Voir tous les accessoires"
+    },
+    {
+      "type": "url",
+      "id": "button_link",
+      "label": "Lien du bouton"
+    },
+    {
+      "type": "range",
+      "id": "desktop_width_percent",
+      "label": "Largeur sur ordinateur",
+      "min": 50,
+      "max": 100,
+      "step": 5,
+      "unit": "%",
+      "default": 100
+    },
+    {
+      "type": "select",
+      "id": "alignment",
+      "label": "Alignement",
+      "options": [
+        { "value": "flex-start", "label": "À gauche" },
+        { "value": "center", "label": "Au centre" },
+        { "value": "flex-end", "label": "À droite" }
+      ],
+      "default": "center"
+    },
+    {
+      "type": "color",
+      "id": "button_color",
+      "label": "Fond",
+      "default": "#E32402"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Texte",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "color",
+      "id": "hover_color",
+      "label": "Fond au survol",
+      "default": "#281916"
+    },
+    {
+      "type": "color",
+      "id": "hover_text_color",
+      "label": "Texte au survol",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "range",
+      "id": "font_size",
+      "label": "Taille du texte",
+      "min": 12,
+      "max": 24,
+      "step": 1,
+      "unit": "px",
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "corner_radius",
+      "label": "Arrondi des angles",
+      "min": 0,
+      "max": 40,
+      "step": 2,
+      "unit": "px",
+      "default": 40
+    }
+  ],
+  "presets": [
+    {
+      "name": "Bouton accessoires"
+    }
+  ],
+  "tag": null,
+  "class": "accessories-button-block"
+}
+{% endschema %}
