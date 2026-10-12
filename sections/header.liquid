@@ -40,40 +40,6 @@
     display: flex;
   }
 
-  @media screen and (min-width: 990px) {
-    .header--top-center.header--has-secondary-menu:not(.drawer-menu) {
-      grid-template-areas:
-        'left-icons heading icons'
-        'secondary-navigation secondary-navigation secondary-navigation'
-        'navigation navigation navigation';
-    }
-
-    .header--top-left.header--has-secondary-menu:not(.drawer-menu) {
-      grid-template-areas:
-        'heading icons'
-        'secondary-navigation secondary-navigation'
-        'navigation navigation';
-    }
-
-    .header__inline-menu--secondary {
-      grid-area: secondary-navigation;
-    }
-
-    .header--middle-left .header__inline-menu--secondary,
-    .header--middle-center .header__inline-menu--secondary {
-      display: none;
-    }
-
-    .header.header--has-secondary-menu .header__inline-menu--secondary + .header__inline-menu {
-      margin-top: 0;
-    }
-
-    .header__inline-menu--secondary .header__menu-item {
-      padding-top: 0.6rem;
-      padding-bottom: 0.6rem;
-    }
-  }
-
   .list-menu {
     list-style: none;
     padding: 0;
@@ -198,7 +164,7 @@
       assign language_selector = true
     endif
   -%}
-  <header class="header header--{{ section.settings.logo_position }} header--mobile-{{ section.settings.mobile_logo_position }} page-width{% if section.settings.menu_type_desktop == 'drawer' %} drawer-menu{% endif %}{% if section.settings.menu != blank %} header--has-menu{% endif %}{% if section.settings.secondary_menu != blank %} header--has-secondary-menu{% endif %}{% if has_app_block %} header--has-app{% endif %}{% if social_links %} header--has-social{% endif %}{% if shop.customer_accounts_enabled %} header--has-account{% endif %}{% if country_selector or language_selector %} header--has-localizations{% endif %}">
+  <header class="header header--{{ section.settings.logo_position }} header--mobile-{{ section.settings.mobile_logo_position }} page-width{% if section.settings.menu_type_desktop == 'drawer' %} drawer-menu{% endif %}{% if section.settings.menu != blank %} header--has-menu{% endif %}{% if has_app_block %} header--has-app{% endif %}{% if social_links %} header--has-social{% endif %}{% if shop.customer_accounts_enabled %} header--has-account{% endif %}{% if country_selector or language_selector %} header--has-localizations{% endif %}">
     {%- liquid
       assign render_search_left = false
       if section.settings.logo_position == 'top-center' or section.settings.menu == blank or shop.customer_accounts_enabled
@@ -248,10 +214,6 @@
     {%- endif -%}
 
     {%- liquid
-      if section.settings.secondary_menu != blank and section.settings.menu_type_desktop != 'drawer'
-        render 'header-dropdown-menu', menu: section.settings.secondary_menu, id_prefix: 'HeaderSecondaryMenu', nav_class: 'header__inline-menu--secondary'
-      endif
-
       if section.settings.menu != blank
         if section.settings.menu_type_desktop == 'dropdown'
           render 'header-dropdown-menu'
@@ -588,12 +550,6 @@
       "id": "menu",
       "default": "main-menu",
       "label": "t:sections.header.settings.menu.label"
-    },
-    {
-      "type": "link_list",
-      "id": "secondary_menu",
-      "label": "Menu secondaire",
-      "info": "Affiché au-dessus du menu principal sur ordinateur, et à la suite du menu principal dans le tiroir mobile."
     },
     {
       "type": "select",
