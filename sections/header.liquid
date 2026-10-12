@@ -211,8 +211,9 @@
     endif
   -%}
   {%- liquid
+    assign secondary_menu = linklists[section.settings.secondary_menu_handle]
     assign show_secondary_menu = false
-    if section.settings.show_secondary_menu and section.settings.secondary_menu != blank and section.settings.menu_type_desktop != 'drawer'
+    if section.settings.show_secondary_menu and secondary_menu.links.size > 0 and section.settings.menu_type_desktop != 'drawer'
       assign show_secondary_menu = true
     endif
   -%}
@@ -268,7 +269,7 @@
     {%- if show_secondary_menu -%}
       <nav class="header__inline-menu header__inline-menu--secondary">
         <ul class="list-menu list-menu--inline" role="list">
-          {%- for link in section.settings.secondary_menu.links -%}
+          {%- for link in secondary_menu.links -%}
             <li>
               <a
                 id="HeaderSecondaryMenu-{{ link.handle }}"
@@ -634,10 +635,10 @@
       "label": "Afficher les liens rapides"
     },
     {
-      "type": "link_list",
-      "id": "secondary_menu",
-      "label": "Menu des liens rapides",
-      "info": "Liens rouges avec flèche affichés au-dessus du menu principal sur ordinateur, et à la suite du menu principal dans le tiroir mobile."
+      "type": "text",
+      "id": "secondary_menu_handle",
+      "label": "Menu des liens rapides (identifiant)",
+      "info": "Identifiant du menu (ex. : liens-rapides), visible dans Contenu > Menus. Liens rouges avec flèche affichés au-dessus du menu principal sur ordinateur, et à la suite du menu principal dans le tiroir mobile."
     },
     {
       "type": "select",

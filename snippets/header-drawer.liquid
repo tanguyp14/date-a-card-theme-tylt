@@ -144,7 +144,7 @@
                 </li>
               {%- endfor -%}
               {%- if section.settings.show_secondary_menu -%}
-              {%- for link in section.settings.secondary_menu.links -%}
+              {%- for link in linklists[section.settings.secondary_menu_handle].links -%}
                 <li>
                   <a
                     id="HeaderDrawerSecondary-{{ link.handle }}"
