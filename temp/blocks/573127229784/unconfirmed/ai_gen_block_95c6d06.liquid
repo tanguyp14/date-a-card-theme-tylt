@@ -1,6 +1,86 @@
+{% doc %}
+  @prompt
+    Je voudrais un bloc avec mes produits qui sont en réduction intitulé black friday
+{% enddoc %}
+{% assign ai_gen_id = block.id | replace: '_', '' | downcase %}
+
+{% style %}
+  .ai-black-friday-{{ ai_gen_id }} {
+    display: block;
+    width: {{ block.settings.desktop_width_percent }}%;
+    max-width: 100%;
+    margin-inline: auto;
+    padding: 28px 20px;
+    background: {{ block.settings.background_color }};
+    color: {{ block.settings.text_color }};
+    border-radius: 18px;
+  }
+  .ai-black-friday-{{ ai_gen_id }}__inner { max-width: 1200px; margin: 0 auto; }
+  .ai-black-friday-{{ ai_gen_id }}__heading { margin: 0 0 22px; color: inherit; font-family: {{ settings.type_header_font.family }}, sans-serif; font-size: clamp(24px, 4vw, 38px); line-height: 1.15; }
+  .ai-black-friday-{{ ai_gen_id }}__grid { display: grid; grid-template-columns: repeat({{ block.settings.columns_desktop }}, minmax(0, 1fr)); gap: 20px; }
+  .ai-black-friday-{{ ai_gen_id }}__card { min-width: 0; overflow: hidden; border: 1px solid rgba(0,0,0,.12); border-radius: 14px; background: #fff; color: #171717; text-decoration: none; }
+  .ai-black-friday-{{ ai_gen_id }}__image { display: block; width: 100%; aspect-ratio: 1 / 1; object-fit: contain; background: #f5f5f5; }
+  .ai-black-friday-{{ ai_gen_id }}__info { padding: 14px; }
+  .ai-black-friday-{{ ai_gen_id }}__title { margin: 0 0 10px; font-size: 16px; line-height: 1.35; }
+  .ai-black-friday-{{ ai_gen_id }}__prices { display: flex; flex-wrap: wrap; gap: 8px; align-items: baseline; }
+  .ai-black-friday-{{ ai_gen_id }}__price { font-weight: 700; }
+  .ai-black-friday-{{ ai_gen_id }}__compare { color: #555; text-decoration: line-through; }
+  .ai-black-friday-{{ ai_gen_id }}__empty { padding: 28px; border: 1px dashed currentColor; border-radius: 12px; text-align: center; }
+  @media screen and (max-width: 749px) {
+    .ai-black-friday-{{ ai_gen_id }} { padding: 22px 14px; }
+    .ai-black-friday-{{ ai_gen_id }}__grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+    .ai-black-friday-{{ ai_gen_id }}__info { padding: 10px; }
+  }
+{% endstyle %}
+
+<div class="ai-black-friday-{{ ai_gen_id }}" {{ block.shopify_attributes }}>
+  <div class="ai-black-friday-{{ ai_gen_id }}__inner">
+    <h2 class="ai-black-friday-{{ ai_gen_id }}__heading">{{ block.settings.heading | escape }}</h2>
+    {% assign sale_collection = block.settings.collection %}
+    {% if sale_collection != blank %}
+      {% assign sale_count = 0 %}
+      <div class="ai-black-friday-{{ ai_gen_id }}__grid">
+        {% for sale_product in sale_collection.products limit: block.settings.products_to_show %}
+          {% if sale_product.compare_at_price > sale_product.price %}
+            {% assign sale_count = sale_count | plus: 1 %}
+            <a class="ai-black-friday-{{ ai_gen_id }}__card" href="{{ sale_product.url }}">
+              {% if sale_product.featured_image %}
+                <img class="ai-black-friday-{{ ai_gen_id }}__image" src="{{ sale_product.featured_image | image_url: width: 700 }}" alt="{{ sale_product.featured_image.alt | default: sale_product.title | escape }}" loading="lazy" width="700" height="700">
+              {% else %}
+                <div class="ai-black-friday-{{ ai_gen_id }}__image">{{ 'product-apparel-1' | placeholder_svg_tag }}</div>
+              {% endif %}
+              <div class="ai-black-friday-{{ ai_gen_id }}__info">
+                <h3 class="ai-black-friday-{{ ai_gen_id }}__title">{{ sale_product.title | escape }}</h3>
+                <div class="ai-black-friday-{{ ai_gen_id }}__prices">
+                  <span class="ai-black-friday-{{ ai_gen_id }}__price">{{ sale_product.price | money }}</span>
+                  <span class="ai-black-friday-{{ ai_gen_id }}__compare">{{ sale_product.compare_at_price | money }}</span>
+                </div>
+              </div>
+            </a>
+          {% endif %}
+        {% endfor %}
+      </div>
+      {% if sale_count == 0 %}<p class="ai-black-friday-{{ ai_gen_id }}__empty">Aucun produit en réduction trouvé dans cette collection. Ajoutez-y des produits avec un prix comparé supérieur au prix actuel.</p>{% endif %}
+    {% else %}
+      <p class="ai-black-friday-{{ ai_gen_id }}__empty">Sélectionnez une collection contenant vos produits en réduction dans les réglages du bloc.</p>
+    {% endif %}
+  </div>
+</div>
+
 {% schema %}
- {
-   "name": "AI_Block",
-   "tag": "shopify-ai-generated-block"
- }
+{
+  "name": "Black Friday",
+  "settings": [
+    { "type": "text", "id": "heading", "label": "Titre", "default": "Black Friday" },
+    { "type": "collection", "id": "collection", "label": "Collection de promotions" },
+    { "type": "range", "id": "products_to_show", "label": "Nombre de produits", "min": 4, "max": 20, "step": 4, "default": 8 },
+    { "type": "select", "id": "columns_desktop", "label": "Colonnes sur ordinateur", "options": [{ "value": "2", "label": "2" }, { "value": "3", "label": "3" }, { "value": "4", "label": "4" }], "default": "4" },
+    { "type": "range", "id": "desktop_width_percent", "label": "Largeur sur ordinateur", "min": 50, "max": 100, "step": 5, "unit": "%", "default": 100 },
+    { "type": "color", "id": "background_color", "label": "Fond", "default": "#171717" },
+    { "type": "color", "id": "text_color", "label": "Texte du titre", "default": "#FFFFFF" }
+  ],
+  "presets": [{ "name": "Black Friday" }],
+  "tag": null,
+  "class": "black-friday-block"
+}
 {% endschema %}
