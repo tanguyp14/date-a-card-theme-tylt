@@ -18,7 +18,7 @@
           "type": "announcement",
           "settings": {
             "text": "Nous rachetons vos cartes et vos items TCG !",
-            "link": "shopify://pages/rachat-de-cartes"
+            "link": "shopify://collections/box-de-noel"
           }
         }
       },
