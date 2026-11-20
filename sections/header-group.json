@@ -14,6 +14,13 @@
     "announcement_bar_bMtrLX": {
       "type": "announcement-bar",
       "blocks": {
+        "announcement_dU6j49": {
+          "type": "announcement",
+          "settings": {
+            "text": "Retrouvez nos promotions à l'occasion du Black Friday !",
+            "link": "shopify://collections/promotions"
+          }
+        },
         "announcement_MfUBzx": {
           "type": "announcement",
           "settings": {
@@ -23,6 +30,7 @@
         }
       },
       "block_order": [
+        "announcement_dU6j49",
         "announcement_MfUBzx"
       ],
       "name": "t:sections.announcement-bar.presets.name",
