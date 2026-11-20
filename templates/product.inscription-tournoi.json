@@ -55,10 +55,10 @@
           "type": "price",
           "settings": {}
         },
-        "tournois_tylt_tournament_fields_mrLAwj": {
-          "type": "shopify://apps/tournois-tylt/blocks/tournament-fields/01a02704-077a-79c3-bc38-fd72e2773e35",
+        "tylt_mega_tcg_x_dateacard_tournament_fields_9L4TCg": {
+          "type": "shopify://apps/tylt-mega-tcg-x-dateacard/blocks/tournament-fields/01a1f87c-9b06-7e93-867f-ee5cedfc60eb",
           "settings": {
-            "product": "yu-gi-oh-wcq-rennes-by-dateacard-dimanche-29-novembre"
+            "product": "{{product}}"
           }
         },
         "buy_buttons": {
@@ -78,7 +78,7 @@
         "rating",
         "variant_picker",
         "price",
-        "tournois_tylt_tournament_fields_mrLAwj",
+        "tylt_mega_tcg_x_dateacard_tournament_fields_9L4TCg",
         "buy_buttons",
         "description"
       ],
