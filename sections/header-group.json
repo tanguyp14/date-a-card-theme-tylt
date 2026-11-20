@@ -14,24 +14,24 @@
     "announcement_bar_bMtrLX": {
       "type": "announcement-bar",
       "blocks": {
-        "announcement_dU6j49": {
-          "type": "announcement",
-          "settings": {
-            "text": "Retrouvez nos promotions à l'occasion du Black Friday !",
-            "link": "shopify://collections/promotions"
-          }
-        },
         "announcement_MfUBzx": {
           "type": "announcement",
           "settings": {
             "text": "Pour vos cadeaux de Noël, des box TCG sont disponibles !",
             "link": "shopify://collections/box-de-noel"
           }
+        },
+        "announcement_dU6j49": {
+          "type": "announcement",
+          "settings": {
+            "text": "Retrouvez nos promotions à l'occasion du Black Friday !",
+            "link": "shopify://collections/promotions"
+          }
         }
       },
       "block_order": [
-        "announcement_dU6j49",
-        "announcement_MfUBzx"
+        "announcement_MfUBzx",
+        "announcement_dU6j49"
       ],
       "name": "t:sections.announcement-bar.presets.name",
       "settings": {
